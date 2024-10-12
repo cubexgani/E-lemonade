@@ -43,21 +43,33 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun LemonContent(modifier: Modifier = Modifier) {
-
+    var res by remember { mutableIntStateOf(0) }
+    val textRes = when (res) {
+        0 -> R.string.lemon_select
+        1 -> R.string.squeeze_lemon
+        2 -> R.string.drink_lemonade
+        else -> R.string.restart
+    }
+    val imgRes = when (res) {
+        0 -> R.drawable.lemon_tree
+        1 -> R.drawable.lemon_squeeze
+        2 -> R.drawable.lemon_drink
+        else -> R.drawable.lemon_restart
+    }
     Column (
         modifier = modifier.fillMaxSize().wrapContentSize(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Button(onClick = {
-
+            res = (res + 1) % 4
         }) {
             Image(
-                painter = painterResource(R.drawable.lemon_tree),
+                painter = painterResource(imgRes),
                 contentDescription = null
             )
         }
         Text(
-            text = stringResource(R.string.lemon_select),
+            text = stringResource(textRes),
             modifier = modifier
         )
     }
